@@ -35,7 +35,7 @@ func init() {
 	viper.SetDefault("interface_to", "127.0.0.1")
 	viper.SetDefault("port_listen", 8089)
 	viper.SetDefault("port_to", 1323)
-	viper.SetConfigFile("originproxy.yaml")
+	viper.SetConfigFile("originproxy.yml")
 	// viper.SetConfigType("yaml")
 	viper.AddConfigPath("/etc/originproxy/")
 	viper.AddConfigPath(".")
