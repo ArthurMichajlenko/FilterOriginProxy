@@ -1,0 +1,13 @@
+# Input connection
+scheme_listen: http
+interface_listen: 127.0.0.1
+port_listen: 8089
+# Output connection
+scheme_to: http
+interface_to: 127.0.0.1
+port_to: 1323
+# List domain names from which allowing connection
+origin:
+  - infinitloop.md
+  - google.com
+  - localhost
