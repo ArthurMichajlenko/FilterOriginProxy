@@ -16,12 +16,12 @@ import (
 var logjson = logrus.New()
 
 type handlerInConn struct {
-	portIn    int
-	hostIn    string
 	schemeIn  string
-	portOut   int
-	hostOut   string
+	hostIn    string
+	portIn    int
 	schemeOut string
+	hostOut   string
+	portOut   int
 }
 
 var myHandler handlerInConn
