@@ -29,12 +29,12 @@ var myHandler handlerInConn
 func init() {
 	log.Println("Init...")
 	// v:=viper.New()
-	viper.SetDefault("scheme_listen", "http")
-	viper.SetDefault("scheme_to", "http")
-	viper.SetDefault("interface_listen", "0.0.0.0")
-	viper.SetDefault("interface_to", "127.0.0.1")
-	viper.SetDefault("port_listen", 8089)
-	viper.SetDefault("port_to", 1323)
+	viper.SetDefault("listen.scheme", "http")
+	viper.SetDefault("listen.interface", "")
+	viper.SetDefault("listen.port", 8089)
+	viper.SetDefault("forward.scheme", "http")
+	viper.SetDefault("forward.interface", "127.0.0.1")
+	viper.SetDefault("forward.port", 1323)
 	viper.SetConfigFile("originproxy.yml")
 	// viper.SetConfigType("yaml")
 	viper.AddConfigPath("/etc/originproxy/")
@@ -42,12 +42,12 @@ func init() {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Println(err)
 	}
-	myHandler.schemeIn = viper.GetString("scheme_listen")
-	myHandler.hostIn = viper.GetString("interface_listen")
-	myHandler.portIn = viper.GetInt("port_listen")
-	myHandler.schemeOut = viper.GetString("scheme_to")
-	myHandler.hostOut = viper.GetString("interface_to")
-	myHandler.portOut = viper.GetInt("port_to")
+	myHandler.schemeIn = viper.GetString("listen.scheme")
+	myHandler.hostIn = viper.GetString("listen.interface")
+	myHandler.portIn = viper.GetInt("listen.port")
+	myHandler.schemeOut = viper.GetString("forward.scheme")
+	myHandler.hostOut = viper.GetString("forward.interface")
+	myHandler.portOut = viper.GetInt("forward.port")
 }
 
 func main() {
