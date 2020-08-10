@@ -11,7 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
-
+//
 //TODO Use logrus for logstash
 var logjson = logrus.New()
 
