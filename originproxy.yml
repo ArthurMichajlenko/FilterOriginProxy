@@ -5,11 +5,6 @@ Listen:
   port: 8089
 # Output connection
 Forward:
-  scheme: http
-  interface: 127.0.0.1
-  port: 1323
-# List domain names from which allowing connection
-origin:
-  - infinitloop.md
-  - google.com
-  - localhost
+  scheme: https
+  interface: esp.md
+  port: 443

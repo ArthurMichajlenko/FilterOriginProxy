@@ -5,15 +5,11 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"sort"
 	"strconv"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-//TODO Use logrus for logstash
-var logjson = logrus.New()
 
 type handlerInConn struct {
 	schemeIn  string
@@ -51,8 +47,6 @@ func init() {
 }
 
 func main() {
-	logjson.SetFormatter(&logrus.JSONFormatter{})
-	logjson.Println("Start...")
 	inConnAddress := myHandler.hostIn + ":" + strconv.Itoa(myHandler.portIn)
 	outConnAddress := myHandler.schemeOut + "://" + myHandler.hostOut + ":" + strconv.Itoa(myHandler.portOut)
 	log.Println(myHandler.schemeIn + "://" + inConnAddress + " -> " + outConnAddress)
@@ -60,29 +54,12 @@ func main() {
 		Addr:    inConnAddress,
 		Handler: &myHandler,
 	}
-	logjson.Fatal(serverIn.ListenAndServe())
-}
-
-func searchOrigin(s string) bool {
-	origins := viper.GetStringSlice("origin")
-	sort.Strings(origins)
-	index := sort.SearchStrings(origins, s)
-	if sort.SearchStrings(origins, s) == len(origins) || origins[index] != s {
-		return false
-	}
-	return true
+	log.Fatal(serverIn.ListenAndServe())
 }
 
 func (hin *handlerInConn) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	origin := r.Header.Get("Origin")
-	log.Println(origin)
+	log.Println("Start...")
 	log.Println(r.RemoteAddr, r.Host, r.Method, r.RequestURI)
-	if len(origin) == 0 || !searchOrigin(origin) {
-		w.Header().Set("Connection", "close")
-		w.WriteHeader(http.StatusForbidden)
-		w.Write([]byte("Forbidden"))
-		return
-	}
 	outAddress := hin.schemeOut + "://" + hin.hostOut + ":" + strconv.Itoa(hin.portOut)
 	outURL, err := url.Parse(outAddress)
 	if err != nil {
